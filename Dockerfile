@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update \ 
-    && apt-get install -y wget \
+    && apt-get install -y wget curl \
     && rm -rf /var/lib/apt/lists/* \
     && wget -O /tmp/govc_linux_amd64.gz https://github.com/vmware/govmomi/releases/download/v0.16.0/govc_linux_amd64.gz \    
     && gzip -d /tmp/govc_linux_amd64.gz \
