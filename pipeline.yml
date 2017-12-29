@@ -1,20 +1,37 @@
 resources:
   
-  - name: govmomi
+  - name: windows-stemcell-builder-repo
     type: git
     source:
-      uri: https://github.com/vmware/govmomi.git
+      uri: https://github.com/patrickhuber/windows-stemcell-builder.git
 
-  - name: govmomi-runtime
+  - name: windows-stemcell-builder-runtime
     type: docker-image
     source:
-      repository: patrickhuber/govmomi-runtime
+      repository: patrickhuber/windows-stemcell-builder-runtime
       username: {{dockerhub-username}}
       password: {{dockerhub-password}}
-      
+
 jobs:
+
+  - name: runtime
+    plan: 
+    - get: windows-stemcell-builder-repo
+    - put: windows-stemcell-builder-runtime
+      params:
+        build: windows-stemcell-builder-repo
+        dockerfile: windows-stemcell-builder-repo/Dockerfile
+
+  - name: iso
+    plan:  
+    - get: windows-stemcell-builder-repo      
+    - task: ensure-iso
+      image: windows-stemcell-builder-runtime
+      file: windows-stemcell-builder-repo/ensure-iso.yml
+  
   - name: vmx
     plan:
-    - get: govmomi
-      
-    
+    - get: windows-stemcell-builder-repo
+    - task: run-image-build
+      image: windows-stemcell-builder-runtime
+      file: windows-stemcell-builder-repo/ensure-vmx.yml    

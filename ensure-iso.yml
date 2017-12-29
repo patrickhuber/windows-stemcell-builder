@@ -1,0 +1,21 @@
+---
+platform: linux
+
+inputs:
+  - name: windows-stemcell-builder-repo
+
+run:
+  path: windows-stemcell-builder-repo/ensure-iso.sh
+
+params:
+  GOVC_URL: {{vcenter_ip}}
+  GOVC_PASSWORD: {{vcenter_password}}
+  GOVC_USERNAME: {{vcenter_username}}
+  GOVC_INSECURE: true
+  GOVC_DATACENTER: {{vcenter_datacenter}}
+  GOVC_DATASTORE: {{vcenter_datastore}}
+  GOVC_NETWORK: {{vcenter_network}}
+  GOVC_CLUSTER: {{vcenter_cluster}}
+  iso: https://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO
+  iso_name: windows-server-2016-x64-evaluation-en-us.iso
+  iso_folder: {{vcenter_iso_folder}}  

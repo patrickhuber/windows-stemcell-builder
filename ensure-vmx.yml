@@ -1,0 +1,8 @@
+---
+platform: linux
+
+inputs:
+  - name: windows-stemcell-builder-repo
+
+run:
+  path: windows-stemcell-builder-repo/ensure-vmx.sh
