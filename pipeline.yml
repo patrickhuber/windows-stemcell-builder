@@ -24,7 +24,9 @@ jobs:
 
   - name: iso
     plan:  
-    - get: windows-stemcell-builder-repo      
+    - get: windows-stemcell-builder-repo
+    - get: windows-stemcell-builder-runtime
+      passed: [runtime]
     - task: ensure-iso
       image: windows-stemcell-builder-runtime
       file: windows-stemcell-builder-repo/ensure-iso.yml
@@ -44,6 +46,8 @@ jobs:
   - name: vmx
     plan:
     - get: windows-stemcell-builder-repo
+    - get: windows-stemcell-builder-runtime
+      passed: [runtime]
     - task: run-image-build
       image: windows-stemcell-builder-runtime
       file: windows-stemcell-builder-repo/ensure-vmx.yml    
